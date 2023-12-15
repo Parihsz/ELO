@@ -36,10 +36,10 @@ local EloServer = {
     Dependencies = {},
 
     Start = function(self)
-        for _, service in pairs(self.Services) do
+        for _, service in self.Services do
             if service.Init then service:Init() end
         end
-        for _, service in pairs(self.Services) do
+        for _, service in self.Services do
             if service.Start then service:Start() end
         end
     end,
@@ -57,7 +57,7 @@ local EloServer = {
     end,
 
     _InjectDependencies = function(self, service)
-        for name in pairs(service.Dependencies or {}) do
+        for name in service.Dependencies or {} do
             assert(self.Dependencies[name], "Missing dependency: " .. name)
             service[name] = self.Dependencies[name]
         end
